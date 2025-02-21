@@ -1,2 +1,104 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @plugin 'daisyui';
+@plugin "daisyui/theme" {
+  name: "purple-light";
+  default: true; /* set as default */
+  prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
+  color-scheme: light; /* color of browser-provided UI */
+
+  --color-base-100: #d7a1f9; /* Light background */
+  --color-base-200: #c576f6;
+  --color-base-300: #b24bf3;
+  --color-base-content: #51087e; /* Dark text color */
+
+  --color-primary: #880ed4; /* Main brand color */
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #6c0ba9;
+  --color-secondary-content: #ffffff;
+
+  --color-accent: #b24bf3;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #51087e;
+  --color-neutral-content: #ffffff;
+
+  --color-info: #a020f0;
+  --color-info-content: #ffffff;
+
+  --color-success: #c576f6;
+  --color-success-content: #ffffff;
+
+  --color-warning: #b24bf3;
+  --color-warning-content: #51087e;
+
+  --color-error: #6c0ba9;
+  --color-error-content: #ffffff;
+
+  /* Border radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+
+  /* Base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* Border size */
+  --border: 1px;
+
+  /* Effects */
+  --depth: 1;
+  --noise: 0;
+}
+@plugin "daisyui/theme" {
+  name: "mytheme-dark";
+  default: false; /* Not default, but can be toggled */
+  prefersdark: true; /* Set as default dark mode (prefers-color-scheme:dark) */
+  color-scheme: dark; /* Color of browser-provided UI */
+
+  --color-base-100: #21053d; /* Dark background */
+  --color-base-200: #31085a;
+  --color-base-300: #51087e;
+  --color-base-content: #d7a1f9; /* Light text color */
+
+  --color-primary: #a020f0; /* Main brand color */
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #880ed4;
+  --color-secondary-content: #ffffff;
+
+  --color-accent: #b24bf3;
+  --color-accent-content: #ffffff;
+
+  --color-neutral: #6c0ba9;
+  --color-neutral-content: #ffffff;
+
+  --color-info: #c576f6;
+  --color-info-content: #ffffff;
+
+  --color-success: #d7a1f9;
+  --color-success-content: #21053d;
+
+  --color-warning: #b24bf3;
+  --color-warning-content: #31085a;
+
+  --color-error: #880ed4;
+  --color-error-content: #ffffff;
+
+  /* Border radius */
+  --radius-selector: 1rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
+
+  /* Base sizes */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  /* Border size */
+  --border: 1px;
+
+  /* Effects */
+  --depth: 2;
+  --noise: 0;
+}
