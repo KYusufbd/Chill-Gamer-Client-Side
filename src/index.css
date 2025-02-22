@@ -1,5 +1,12 @@
 @import "tailwindcss";
-@plugin 'daisyui';
+
+nav .active {
+  background-color: var(--color-base-300);
+}
+
+@plugin 'daisyui' {
+  themes: purple-light --default, night --prefersdark;
+}
 @plugin "daisyui/theme" {
   name: "purple-light";
   default: true; /* set as default */
@@ -52,7 +59,7 @@
   --noise: 0;
 }
 @plugin "daisyui/theme" {
-  name: "mytheme-dark";
+  name: "purple-dark";
   default: false; /* Not default, but can be toggled */
   prefersdark: true; /* Set as default dark mode (prefers-color-scheme:dark) */
   color-scheme: dark; /* Color of browser-provided UI */
