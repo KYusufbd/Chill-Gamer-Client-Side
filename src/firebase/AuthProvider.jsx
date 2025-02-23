@@ -14,11 +14,11 @@ import swal from "sweetalert";
 const AuthProvider = ({ children }) => {
   const { api } = useContext(ApiContext);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  //   const [loading, setLoading] = useState(false);
 
   const provider = new GoogleAuthProvider();
   // Login with Google:
-  const loginWithGoogle = () => {
+  const loginWithGoogle = async () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -27,25 +27,31 @@ const AuthProvider = ({ children }) => {
         // The signed-in user info.
         const loggedUser = result.user;
         // IdP data available using getAdditionalUserInfo(result)
-
-        // // Add user info to database when logged in first time
-        // fetch(`${api}/user`, {
-        //   method: "POST",
-        //   headers: {
-        //     "content-type": "application/json",
-        //   },
-        //   body: JSON.stringify(user),
-        // })
-        //   .then((res) => res.json())
-        //   .then((data) => console.log(data));
+        // Update user state
         setUser(loggedUser);
+        const name = loggedUser.displayName;
+        const email = loggedUser.email;
+        const image = loggedUser.photoURL;
+        const userObj = { name, email, image };
+        console.log(userObj);
+
+        // Add user info to database when logged in first time
+        fetch(`${api}/user`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userObj),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.customData.email;
+        const email = error.customData?.email;
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorCode, errorMessage, email, credential);
@@ -56,7 +62,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      //   setLoading(false);
       return unsubscribe();
     });
   }, []);
