@@ -5,7 +5,9 @@ nav .active {
 }
 
 @plugin 'daisyui' {
-  themes: purple-light --default, night --prefersdark;
+  themes:
+    purple-light --default,
+    night --prefersdark;
 }
 @plugin "daisyui/theme" {
   name: "purple-light";

@@ -1,8 +1,15 @@
 import { Link, NavLink } from "react-router";
-import ThemeController from './ThemeController.jsx';
+import ThemeController from "./ThemeController.jsx";
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import AuthContext from "../contexts/AuthContext.js";
 
-const Navbar = ({ themeToggle, theme}) => {
+const Navbar = ({ themeToggle, theme }) => {
+  const { user, logout } = useContext(AuthContext);
+
+  // Testing purpose only
+  console.log(user);
+
   const navMenu = (
     <>
       <li>
@@ -11,12 +18,19 @@ const Navbar = ({ themeToggle, theme}) => {
       <li>
         <NavLink to="/reviews">All Reviews</NavLink>
       </li>
-      <li>
-        <NavLink to="/add-review">Add Review</NavLink>
-      </li>
-      <li>
-        <NavLink to="/my-reviews">My Reviews</NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/add-review">Add Review</NavLink>
+          </li>
+          <li>
+            <NavLink to="/my-reviews">My Reviews</NavLink>
+          </li>
+          <li>
+            <NavLink to="/watchlist">Watchlist</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -47,16 +61,33 @@ const Navbar = ({ themeToggle, theme}) => {
             {navMenu}
           </ul>
         </div>
-        <Link to='/' className="cursor-pointer font-bold text-2xl">CHILL-GAMER</Link>
+        <Link
+          to="/"
+          className="flex flex-row gap-2 items-center cursor-pointer font-bold text-2xl"
+        >
+          <img className="h-10 rounded-lg" src="/logo-filled.png" />
+          <p className="hidden md:inline">CHILL-GAMER</p>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {navMenu}
-        </ul>
+        <ul className="menu menu-horizontal px-1 text-lg">{navMenu}</ul>
       </div>
-      <div className="navbar-end">
-        <NavLink to="/login" className="btn">Login</NavLink>
-        <NavLink to="/register" className="btn">Register</NavLink>
+      <div className="navbar-end flex flex-row gap-1">
+        {!user && (
+          <>
+            <NavLink to="/login" className="btn">
+              Login
+            </NavLink>
+            <NavLink to="/register" className="btn">
+              Register
+            </NavLink>
+          </>
+        )}
+        {user && (
+          <button onClick={logout} className="btn">
+            Log Out
+          </button>
+        )}
         <ThemeController themeToggle={themeToggle} theme={theme} />
       </div>
     </nav>
@@ -68,4 +99,4 @@ export default Navbar;
 Navbar.propTypes = {
   themeToggle: PropTypes.func.isRequired,
   theme: PropTypes.string.isRequired,
-}
+};

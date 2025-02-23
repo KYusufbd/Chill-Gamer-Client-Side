@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 function App() {
   const [theme, setTheme] = useState("purple-light");
@@ -10,6 +10,12 @@ function App() {
       ? setTheme("purple-light")
       : setTheme("purple-dark");
   };
+
+  // This code is to scroll to top when the route is changed.
+  const location = useLocation();
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, [location]);
 
   return (
     <div

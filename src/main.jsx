@@ -9,24 +9,27 @@ import Reviews from "./components/Reviews.jsx";
 import AddReview from "./components/AddReview.jsx";
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
+import AuthProvider from "./firebase/AuthProvider.jsx";
 
 const api = "http://localhost:3000";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ApiContext.Provider value={{api}}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route index element={<Home />} />
-            <Route path="/reviews" element={<Reviews />} />
-            <Route path="/add-review" element={<AddReview />} />
-            <Route path="/my-reviews" element={<Reviews />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <ApiContext.Provider value={{ api }}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route index element={<Home />} />
+              <Route path="/reviews" element={<Reviews />} />
+              <Route path="/add-review" element={<AddReview />} />
+              <Route path="/my-reviews" element={<Reviews />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </ApiContext.Provider>
-  </StrictMode>
+  </StrictMode>,
 );
