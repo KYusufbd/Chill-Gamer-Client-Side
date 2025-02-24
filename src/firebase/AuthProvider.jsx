@@ -116,9 +116,10 @@ const AuthProvider = ({ children }) => {
         toast("Logged in successfully!");
       })
       .catch((error) => {
-        const errorCode = error.code;
+        // const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        console.log(errorMessage);
+        toast('Username or password is incorrect!')
       });
   };
 
