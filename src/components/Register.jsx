@@ -1,28 +1,37 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import AuthContext from "../contexts/AuthContext";
+import { isStrongPassword } from "validator";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { loginWithGoogle, user, register } = useContext(AuthContext);
+  const [warning, setWarning] = useState(false);
+
+  // Function for password validation:
+  const isPasswordValid = (pass) => {
+    return isStrongPassword(pass, {
+      minLength: 6,
+      minNumbers: 0,
+      minSymbols: 0,
+      minLowercase: 1,
+      minUppercase: 1,
+    });
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    register(name, email, password);
-    e.target.reset();
+    if (isPasswordValid(password)) {
+      register(name, email, password)
+      e.target.reset();
+    } else {
+      toast("Invalid passowrd!");
+      setWarning(true);
+    };
   };
-
-  // const isPasswordValid = (pass) => {
-  //   return isStrongPassword(pass, {
-  //     minLength: 6,
-  //     minNumbers: 0,
-  //     minSymbols: 0,
-  //     minLowercase: 1,
-  //     minUppercase: 1,
-  //   });
-  // };
 
   // Navigating logged in users to home page.
   const navigate = useNavigate();
@@ -78,6 +87,7 @@ const Register = () => {
                 className="input"
                 placeholder="Password"
               />
+              {warning && <p className="text-warning">Password must be at least 6 characters long and include at least one uppercase letter and one lowercase letter.</p>}
               <button className="btn btn-neutral mt-4">Register</button>
             </form>
             <p>
