@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Outlet, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
 import LoadingContext from "./contexts/LoadingContext";
+import ApiContext from "./contexts/ApiContext";
 
 function App() {
   const [theme, setTheme] = useState("purple-light");
@@ -20,9 +21,24 @@ function App() {
   }, [location]);
 
   const [loading, setLoading] = useState(false);
+  const [allReviews, setAllReviews] = useState([])
+
+  const { api } = useContext(ApiContext);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch(`${api}/reviews`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setAllReviews(data);
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <LoadingContext.Provider value={{ loading, setLoading }}>
+    <LoadingContext.Provider value={{ loading, setLoading, allReviews }}>
       <div
         data-theme={theme}
         className="card bg-base-200 w-full shrink-0 shadow-2xl flex flex-col justify-center items-center"

@@ -22,26 +22,8 @@ const Home = () => {
   };
 
   return (
-    <div className="card-body w-64 max-w-full mx-auto">
-      <form className="fieldset" onSubmit={handleSubmit}>
-        <label className="fieldset-label">Name</label>
-        <input name="name" type="text" className="input" placeholder="Name" />
-        <label className="fieldset-label">Email</label>
-        <input
-          name="email"
-          type="email"
-          className="input"
-          placeholder="Email"
-        />
-        <label className="fieldset-label">Phone Number</label>
-        <input
-          name="phone"
-          type="text"
-          className="input"
-          placeholder="Phone no."
-        />
-        <button className="btn btn-primary mt-4">Create User</button>
-      </form>
+    <div className="card-body w-full mx-auto">
+     <h1 className="text-5xl font-medium mx-auto">Home page!</h1>
     </div>
   );
 };
