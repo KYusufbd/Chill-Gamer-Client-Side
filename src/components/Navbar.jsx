@@ -7,6 +7,8 @@ import AuthContext from "../contexts/AuthContext.js";
 const Navbar = ({ themeToggle, theme }) => {
   const { user, logout } = useContext(AuthContext);
 
+  console.log(user);
+
   const navMenu = (
     <>
       <li>
@@ -81,9 +83,18 @@ const Navbar = ({ themeToggle, theme }) => {
           </>
         )}
         {user && (
-          <button onClick={logout} className="btn">
-            Log Out
-          </button>
+          <>
+            <div className="tooltip tooltip-bottom mx-3" data-tip={user.displayName}>
+              <img
+                src={user.photoURL ? user.photoURL : "/user.png"}
+                alt="user-image"
+                className="rounded-full h-10 w-10"
+              />
+            </div>
+            <button onClick={logout} className="btn">
+              Log Out
+            </button>
+          </>
         )}
         <ThemeController themeToggle={themeToggle} theme={theme} />
       </div>

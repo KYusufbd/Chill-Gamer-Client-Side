@@ -55,6 +55,8 @@ const AuthProvider = ({ children }) => {
         const userObj = { name, email, image };
 
         postUser(userObj);
+
+        toast('Logged in with Google Successfully!')
       })
       .catch((error) => {
         // Handle Errors here.
@@ -96,6 +98,7 @@ const AuthProvider = ({ children }) => {
         const loggedUser = userCredential.user;
         // Update user
         setUser(loggedUser);
+        toast("Logged in successfully!")
       })
       .catch((error) => {
         const errorCode = error.code;
