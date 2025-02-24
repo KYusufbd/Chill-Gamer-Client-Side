@@ -121,7 +121,7 @@ const AuthProvider = ({ children }) => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        swal("Logged Out!", "You are logged out successfully!", "warning");
+        swal("Logged Out!", "You have logged out successfully!", "warning");
         setUser(null);
       })
       .catch((error) => {
