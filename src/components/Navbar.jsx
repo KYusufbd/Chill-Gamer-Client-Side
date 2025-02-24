@@ -7,9 +7,6 @@ import AuthContext from "../contexts/AuthContext.js";
 const Navbar = ({ themeToggle, theme }) => {
   const { user, logout } = useContext(AuthContext);
 
-  // Testing purpose only
-  console.log(user);
-
   const navMenu = (
     <>
       <li>

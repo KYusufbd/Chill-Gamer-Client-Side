@@ -1,16 +1,28 @@
-import { useContext } from "react";
-import { Link } from "react-router";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate } from "react-router";
 import AuthContext from "../contexts/AuthContext";
 
 const Login = () => {
-  const { loginWithGoogle } = useContext(AuthContext);
-  const handleLogin = () => {};
+  const { loginWithGoogle, signIn, user } = useContext(AuthContext);
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    signIn(email, password);
+  };
+
+  // Navigating logged in users to home page.
+  const navigate = useNavigate();
+  useEffect(() => {
+    user && navigate('/');
+  }, [navigate, user])
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row max-w-6xl">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
-          <p className="py-6 text-lg opacity-80 font-medium">
+        <div className="text-center lg:text-left px-4 md:px-8 lg:px-12">
+          <h1 className="text-3xl lg:text-5xl md:text-4xl font-bold">Login now!</h1>
+          <p className="py-6 text-lg opacity-80 max-w-160 font-medium">
             Welcome back, gamer! Log in to explore, review, and share your
             thoughts on your favorite games.
           </p>
@@ -19,9 +31,9 @@ const Login = () => {
           <div className="card-body">
             <form onSubmit={handleLogin} className="fieldset">
               <label className="fieldset-label">Email</label>
-              <input type="email" className="input" placeholder="Email" />
+              <input required name='email' type="email" className="input" placeholder="Email" />
               <label className="fieldset-label">Password</label>
-              <input type="password" className="input" placeholder="Password" />
+              <input required name='password' type="password" className="input" placeholder="Password" />
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>

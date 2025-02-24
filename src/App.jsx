@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Outlet, useLocation } from "react-router";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [theme, setTheme] = useState("purple-light");
@@ -23,8 +24,9 @@ function App() {
       className="card bg-base-100 w-full shrink-0 shadow-2xl flex flex-col justify-center items-center"
     >
       <Navbar themeToggle={themeToggle} theme={theme} />
-      <main className="w-[1440px] max-w-full h-screen bg-base-200">
+      <main className="w-[1440px] max-w-full min-h-screen bg-base-200">
         <Outlet />
+        <ToastContainer />
       </main>
       <Footer />
     </div>

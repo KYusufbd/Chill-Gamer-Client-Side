@@ -6,10 +6,13 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import ApiContext from "../contexts/ApiContext";
 import swal from "sweetalert";
+import { toast } from "react-toastify";
 
 const AuthProvider = ({ children }) => {
   const { api } = useContext(ApiContext);
@@ -17,6 +20,22 @@ const AuthProvider = ({ children }) => {
   //   const [loading, setLoading] = useState(false);
 
   const provider = new GoogleAuthProvider();
+
+  // Function for aading user info to database when logged in first time
+  const postUser = (userObj) => {
+    fetch(`${api}/user`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(userObj),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        return data;
+      });
+  };
+
   // Login with Google:
   const loginWithGoogle = async () => {
     signInWithPopup(auth, provider)
@@ -29,22 +48,13 @@ const AuthProvider = ({ children }) => {
         // IdP data available using getAdditionalUserInfo(result)
         // Update user state
         setUser(loggedUser);
+
         const name = loggedUser.displayName;
         const email = loggedUser.email;
         const image = loggedUser.photoURL;
         const userObj = { name, email, image };
-        console.log(userObj);
 
-        // Add user info to database when logged in first time
-        fetch(`${api}/user`, {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userObj),
-        })
-          .then((res) => res.json())
-          .then((data) => console.log(data));
+        postUser(userObj);
       })
       .catch((error) => {
         // Handle Errors here.
@@ -55,6 +65,42 @@ const AuthProvider = ({ children }) => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         console.log(errorCode, errorMessage, email, credential);
+      });
+  };
+
+  // Register a user with email
+  const register = (name, email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        // Signed up
+        const newUser = userCredential.user;
+        // Update curren user
+        setUser(newUser);
+        const userObj = { name, email, password };
+        const response = await postUser(userObj);
+        console.log(response);
+        toast("Registration is successful!")
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+      });
+  };
+
+  // Create an account with email an password
+  const signIn = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const loggedUser = userCredential.user;
+        // Update user
+        setUser(loggedUser);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
       });
   };
 
@@ -82,6 +128,8 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     loginWithGoogle,
+    register,
+    signIn,
     user,
     logout,
   };
