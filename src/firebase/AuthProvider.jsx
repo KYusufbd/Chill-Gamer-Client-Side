@@ -8,6 +8,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { useContext, useEffect, useState } from "react";
 import ApiContext from "../contexts/ApiContext";
@@ -51,12 +52,11 @@ const AuthProvider = ({ children }) => {
 
         const name = loggedUser.displayName;
         const email = loggedUser.email;
-        const image = loggedUser.photoURL;
-        const userObj = { name, email, image };
+        const userObj = { name, email };
 
         postUser(userObj);
 
-        toast('Logged in with Google Successfully!')
+        toast("Logged in with Google Successfully!");
       })
       .catch((error) => {
         // Handle Errors here.
@@ -71,17 +71,32 @@ const AuthProvider = ({ children }) => {
   };
 
   // Register a user with email
-  const register = (name, email, password) => {
+  const register = (name, email, password, imageURL) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         // Signed up
-        const newUser = userCredential.user;
+        // Add image URL
+        if (imageURL) {
+          updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: imageURL,
+          })
+            .then(() => {
+              // Profile updated!
+              // Registration is successfull!
+            })
+            .catch((error) => {
+              // An error occurred
+              console.log(error);
+            });
+        }
         // Update curren user
+        const newUser = userCredential.user;
         setUser(newUser);
-        const userObj = { name, email, password };
+        const userObj = { name, email };
         const response = await postUser(userObj);
         console.log(response);
-        toast("Registration is successful!")
+        toast("Registration is successful!");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -98,7 +113,7 @@ const AuthProvider = ({ children }) => {
         const loggedUser = userCredential.user;
         // Update user
         setUser(loggedUser);
-        toast("Logged in successfully!")
+        toast("Logged in successfully!");
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -24,8 +24,9 @@ const Register = () => {
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const imageURL = e.target.imageURL.value;
     if (isPasswordValid(password)) {
-      register(name, email, password)
+      register(name, email, password, imageURL)
       e.target.reset();
     } else {
       toast("Invalid passowrd!");
@@ -78,6 +79,13 @@ const Register = () => {
                 type="email"
                 className="input"
                 placeholder="Email"
+              />
+              <label className="fieldset-label">Photo URL (Optional)</label>
+              <input
+                name="imageURL"
+                type="url"
+                className="input"
+                placeholder="Photo URL"
               />
               <label className="fieldset-label">Password</label>
               <input

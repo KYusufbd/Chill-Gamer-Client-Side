@@ -84,7 +84,7 @@ const Navbar = ({ themeToggle, theme }) => {
         )}
         {user && (
           <>
-            <div className="tooltip tooltip-bottom mx-3" data-tip={user.displayName}>
+            <div className="tooltip tooltip-left mx-3" data-tip={user.displayName}>
               <img
                 src={user.photoURL ? user.photoURL : "/user.png"}
                 alt="user-image"
