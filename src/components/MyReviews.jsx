@@ -8,9 +8,9 @@ const MyReviews = () => {
   !user && navigate("/login");
   if (user) {
     return (
-        <div>
-            <h1 className="text-5xl text-center">My Reviews</h1>
-        </div>
+      <div>
+        <h1 className="text-5xl text-center">My Reviews</h1>
+      </div>
     );
   }
 };

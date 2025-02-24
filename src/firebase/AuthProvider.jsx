@@ -56,7 +56,7 @@ const AuthProvider = ({ children }) => {
 
         postUser(userObj);
 
-        toast("Logged in with Google Successfully!");
+        toast("Logged in with Google successfully!");
       })
       .catch((error) => {
         // Handle Errors here.
@@ -119,7 +119,7 @@ const AuthProvider = ({ children }) => {
         // const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage);
-        toast('Username or password is incorrect!')
+        toast("Username or password is incorrect!");
       });
   };
 

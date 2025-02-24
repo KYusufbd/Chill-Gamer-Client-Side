@@ -14,14 +14,16 @@ const Login = () => {
   // Navigating logged in users to home page.
   const navigate = useNavigate();
   useEffect(() => {
-    user && navigate('/');
-  }, [navigate, user])
+    user && navigate("/");
+  }, [navigate, user]);
 
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row max-w-6xl">
         <div className="text-center lg:text-left px-4 md:px-8 lg:px-12">
-          <h1 className="text-3xl lg:text-5xl md:text-4xl font-bold">Login now!</h1>
+          <h1 className="text-3xl lg:text-5xl md:text-4xl font-bold">
+            Login now!
+          </h1>
           <p className="py-6 text-lg opacity-80 max-w-160 font-medium">
             Welcome back, gamer! Log in to explore, review, and share your
             thoughts on your favorite games.
@@ -31,9 +33,21 @@ const Login = () => {
           <div className="card-body">
             <form onSubmit={handleLogin} className="fieldset">
               <label className="fieldset-label">Email</label>
-              <input required name='email' type="email" className="input" placeholder="Email" />
+              <input
+                required
+                name="email"
+                type="email"
+                className="input"
+                placeholder="Email"
+              />
               <label className="fieldset-label">Password</label>
-              <input required name='password' type="password" className="input" placeholder="Password" />
+              <input
+                required
+                name="password"
+                type="password"
+                className="input"
+                placeholder="Password"
+              />
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>

@@ -26,12 +26,12 @@ const Register = () => {
     const password = e.target.password.value;
     const imageURL = e.target.imageURL.value;
     if (isPasswordValid(password)) {
-      register(name, email, password, imageURL)
+      register(name, email, password, imageURL);
       e.target.reset();
     } else {
       toast("Invalid passowrd!");
       setWarning(true);
-    };
+    }
   };
 
   // Navigating logged in users to home page.
@@ -95,7 +95,12 @@ const Register = () => {
                 className="input"
                 placeholder="Password"
               />
-              {warning && <p className="text-warning">Password must be at least 6 characters long and include at least one uppercase letter and one lowercase letter.</p>}
+              {warning && (
+                <p className="text-warning">
+                  Password must be at least 6 characters long and include at
+                  least one uppercase letter and one lowercase letter.
+                </p>
+              )}
               <button className="btn btn-neutral mt-4">Register</button>
             </form>
             <p>
