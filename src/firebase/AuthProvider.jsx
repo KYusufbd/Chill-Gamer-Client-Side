@@ -30,11 +30,9 @@ const AuthProvider = ({ children }) => {
         "content-type": "application/json",
       },
       body: JSON.stringify(userObj),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        return data;
-      });
+    }).then((res) => {
+      console.log(res);
+    });
   };
 
   // Login with Google:
@@ -70,26 +68,24 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  // Register a user with email
+  // Create an account with email an password
   const register = (name, email, password, imageURL) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         // Signed up
         // Add image URL
-        if (imageURL) {
-          updateProfile(auth.currentUser, {
-            displayName: name,
-            photoURL: imageURL,
+        updateProfile(auth.currentUser, {
+          displayName: name,
+          photoURL: imageURL,
+        })
+          .then(() => {
+            // Profile updated!
+            // Registration is successfull!
           })
-            .then(() => {
-              // Profile updated!
-              // Registration is successfull!
-            })
-            .catch((error) => {
-              // An error occurred
-              console.log(error);
-            });
-        }
+          .catch((error) => {
+            // An error occurred
+            console.log(error);
+          });
         // Update curren user
         const newUser = userCredential.user;
         setUser(newUser);
@@ -105,7 +101,7 @@ const AuthProvider = ({ children }) => {
       });
   };
 
-  // Create an account with email an password
+  // Log in with email and password
   const signIn = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {

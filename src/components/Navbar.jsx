@@ -7,8 +7,6 @@ import AuthContext from "../contexts/AuthContext.js";
 const Navbar = ({ themeToggle, theme }) => {
   const { user, logout } = useContext(AuthContext);
 
-  console.log(user);
-
   const navMenu = (
     <>
       <li>
@@ -33,7 +31,7 @@ const Navbar = ({ themeToggle, theme }) => {
     </>
   );
   return (
-    <div className="w-full bg-base-100">
+    <div className="w-full bg-base-100 sticky top-0 z-40">
       <nav className="navbar shadow-sm w-[1440px] max-w-full mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
