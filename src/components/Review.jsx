@@ -23,7 +23,8 @@ const Review = () => {
         setReview(data);
         setLoading(false);
       });
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
   
   const addToWatchlist = gameId => {
     const reqBody = {
@@ -40,6 +41,8 @@ const Review = () => {
     }).then(
       toast("Added to watchlist successfully!")
     ).catch(error => console.log(error));
+
+    !user && toast("Please log in on register first!")
   }
 
   if (review.game)
