@@ -3,10 +3,13 @@ import ApiContext from "../contexts/ApiContext";
 import { useParams } from "react-router";
 import LoadingContext from "../contexts/LoadingContext";
 import StarRatings from "react-star-ratings";
+import AuthContext from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Review = () => {
   const { api } = useContext(ApiContext);
   const { setLoading } = useContext(LoadingContext);
+  const { user } = useContext(AuthContext);
   const [review, setReview] = useState({});
   const id = useParams().id;
 
@@ -21,13 +24,30 @@ const Review = () => {
         setLoading(false);
       });
   }, []);
+  
+  const addToWatchlist = gameId => {
+    const reqBody = {
+      loggedIn: true,
+      email: user?.email,
+      game: gameId,
+    }
+    user && fetch(`${api}/watchlist`, {
+      method: 'POST',
+      headers: {
+        "content-type": 'application/json',
+      },
+      body: JSON.stringify(reqBody)
+    }).then(
+      toast("Added to watchlist successfully!")
+    ).catch(error => console.log(error));
+  }
 
   if (review.game)
     return (
       <div className="w-full p-3">
         <div className="card bg-base-100 w-160 max-w-full mx-auto shadow-sm">
           <figure>
-            <img src={review?.game?.image} alt="Shoes" />
+            <img src={review.game.image} alt="Shoes" />
           </figure>
           <div className="card-body">
             <h2 className="card-title text-3xl">{review.game.title}</h2>
@@ -53,7 +73,7 @@ const Review = () => {
               </div>
             </div>
             <div className="card-actions justify-end">
-              <button className="btn btn-primary">Add To Watchlist</button>
+              <button className="btn btn-primary" onClick={() => addToWatchlist(review.game._id)}>Add To Watchlist</button>
             </div>
           </div>
         </div>
