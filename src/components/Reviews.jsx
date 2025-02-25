@@ -1,9 +1,26 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import LoadingContext from "../contexts/LoadingContext";
 import { Link } from "react-router";
+import ApiContext from "../contexts/ApiContext";
 
 const Reviews = () => {
-  const { allReviews } = useContext(LoadingContext);
+  const { setLoading, allReviews, setAllReviews } = useContext(LoadingContext);
+  const { api } = useContext(ApiContext);
+
+  useEffect(() => {
+    if (!allReviews.length) {
+      setLoading(true);
+      fetch(`${api}/reviews`)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setAllReviews(data);
+          setLoading(false);
+        });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allReviews]);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 p-3">

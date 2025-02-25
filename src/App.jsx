@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Outlet, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
 import LoadingContext from "./contexts/LoadingContext";
-import ApiContext from "./contexts/ApiContext";
 
 function App() {
   const [theme, setTheme] = useState("purple-light");
@@ -21,24 +20,12 @@ function App() {
   }, [location]);
 
   const [loading, setLoading] = useState(false);
-  const [allReviews, setAllReviews] = useState([])
-
-  const { api } = useContext(ApiContext);
-
-  useEffect(() => {
-    setLoading(true);
-    fetch(`${api}/reviews`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setAllReviews(data);
-        setLoading(false);
-      });
-  }, []);
+  const [allReviews, setAllReviews] = useState([]);
 
   return (
-    <LoadingContext.Provider value={{ loading, setLoading, allReviews }}>
+    <LoadingContext.Provider
+      value={{ loading, setLoading, allReviews, setAllReviews }}
+    >
       <div
         data-theme={theme}
         className="card bg-base-200 w-full shrink-0 shadow-2xl flex flex-col justify-center items-center"
@@ -54,7 +41,7 @@ function App() {
           )}
         </main>
         <button
-          className="rotate-180 rounded-full border-1 border-neutral w-8 h-8 fixed bottom-8 right-8 bg-transparent cursor-pointer opacity-20 hover:opacity-60"
+          className="rotate-180 rounded-full border-1 border-neutral w-8 h-8 fixed bottom-8 right-8 bg-transparent cursor-pointer opacity-20 hover:opacity-100"
           onClick={() => scrollTo(0, 0)}
         >
           V
