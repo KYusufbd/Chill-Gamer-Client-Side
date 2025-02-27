@@ -1,30 +1,76 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { Outlet, useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
 import LoadingContext from "./contexts/LoadingContext";
+import AuthContext from "./contexts/AuthContext";
+import ApiContext from "./contexts/ApiContext";
 
 function App() {
   const [theme, setTheme] = useState("purple-light");
+  const [loading, setLoading] = useState(false);
+  const [allReviews, setAllReviews] = useState([]);
+  const [watchlist, setWatchlist] = useState([]);
+
+  const { user } = useContext(AuthContext);
+  const { api } = useContext(ApiContext);
+
+  // Theme toggle function
   const themeToggle = () => {
     theme === "purple-dark"
       ? setTheme("purple-light")
       : setTheme("purple-dark");
   };
 
-  // This code is to scroll to top when the route is changed.
+  // Fetch watchlist data function
+  const fetchWatchlist = async () => {
+    try {
+      user &&
+        user.getIdToken().then((token) => {
+          setLoading(true);
+          fetch(`${api}/watchlist`, {
+            method: "GET",
+            headers: {
+              authorization: token,
+              "content-type": "application/json",
+            },
+          })
+            .then((res) => {
+              return res.json();
+            })
+            .then((data) => {
+              setWatchlist(data);
+              setLoading(false);
+            });
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchWatchlist();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  // Function to scroll to top when the route is changed.
   const location = useLocation();
   useEffect(() => {
     scrollTo(0, 0);
   }, [location]);
 
-  const [loading, setLoading] = useState(false);
-  const [allReviews, setAllReviews] = useState([]);
-
   return (
     <LoadingContext.Provider
-      value={{ loading, setLoading, allReviews, setAllReviews }}
+      value={{
+        loading,
+        setLoading,
+        allReviews,
+        setAllReviews,
+        watchlist,
+        setWatchlist,
+        fetchWatchlist
+      }}
     >
       <div
         data-theme={theme}
