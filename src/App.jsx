@@ -12,6 +12,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [allReviews, setAllReviews] = useState([]);
   const [watchlist, setWatchlist] = useState([]);
+  const [myReviews, setMyReviews] = useState([]);
 
   const { user } = useContext(AuthContext);
   const { api } = useContext(ApiContext);
@@ -70,6 +71,8 @@ function App() {
         watchlist,
         setWatchlist,
         fetchWatchlist,
+        myReviews,
+        setMyReviews,
       }}
     >
       <div

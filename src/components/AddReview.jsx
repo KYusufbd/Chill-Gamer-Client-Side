@@ -2,10 +2,12 @@ import { useState, useContext } from "react";
 import StarRatings from "react-star-ratings";
 import AuthContext from "../contexts/AuthContext";
 import ApiContext from "../contexts/ApiContext";
+import LoadingContext from "../contexts/LoadingContext";
 
 const AddReview = () => {
   const { user } = useContext(AuthContext);
   const { api } = useContext(ApiContext);
+  const { fetchWatchlist } = useContext(LoadingContext);
 
   const allGenres = [
     "Action",
@@ -70,6 +72,7 @@ const AddReview = () => {
       .then((data) => {
         e.target.reset();
         console.log(data);
+        fetchWatchlist();
       })
       .catch((error) => console.log(error));
   };
