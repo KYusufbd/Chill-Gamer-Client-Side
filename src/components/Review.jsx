@@ -8,11 +8,11 @@ import { toast } from "react-toastify";
 
 const Review = () => {
   const { api } = useContext(ApiContext);
-  const { setLoading, watchlist, fetchWatchlist  } = useContext(LoadingContext);
+  const { setLoading, watchlist, fetchWatchlist } = useContext(LoadingContext);
   const { user } = useContext(AuthContext);
   const [review, setReview] = useState({});
   const id = useParams().id;
-  const added = watchlist.some(game => game._id === review?.game?._id);
+  const added = watchlist.some((game) => game._id === review?.game?._id);
 
   useEffect(() => {
     setLoading(true);
@@ -42,7 +42,7 @@ const Review = () => {
           body: JSON.stringify(reqBody),
         })
           .then(() => {
-            toast("Added to watchlist successfully!")
+            toast("Added to watchlist successfully!");
             fetchWatchlist();
           })
           .catch((error) => console.log(error));

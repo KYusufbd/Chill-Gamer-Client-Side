@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div className="card-body w-full mx-auto">
-     <h1 className="text-5xl font-medium mx-auto">Home page!</h1>
+      <h1 className="text-5xl font-medium mx-auto">Home page!</h1>
     </div>
   );
 };

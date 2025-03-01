@@ -1,5 +1,4 @@
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
 import ApiContext from "../contexts/ApiContext";
 import LoadingContext from "../contexts/LoadingContext";
@@ -7,9 +6,8 @@ import Loading from "./Loading";
 
 const Watchlist = () => {
   const { user } = useContext(AuthContext);
-  const { loading, watchlist, fetchWatchlist } = useContext(LoadingContext);
+  const { watchlist, fetchWatchlist } = useContext(LoadingContext);
   const { api } = useContext(ApiContext);
-  const navigate = useNavigate();
 
   const removeFromWatchlist = (gameId) => {
     user.getIdToken().then((token) => {

@@ -51,7 +51,7 @@ function App() {
 
   useEffect(() => {
     fetchWatchlist();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   // Function to scroll to top when the route is changed.
@@ -69,7 +69,7 @@ function App() {
         setAllReviews,
         watchlist,
         setWatchlist,
-        fetchWatchlist
+        fetchWatchlist,
       }}
     >
       <div
