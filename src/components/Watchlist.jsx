@@ -3,10 +3,11 @@ import { useNavigate } from "react-router";
 import AuthContext from "../contexts/AuthContext";
 import ApiContext from "../contexts/ApiContext";
 import LoadingContext from "../contexts/LoadingContext";
+import Loading from "./Loading";
 
 const Watchlist = () => {
   const { user } = useContext(AuthContext);
-  const { watchlist, fetchWatchlist } = useContext(LoadingContext);
+  const { loading, watchlist, fetchWatchlist } = useContext(LoadingContext);
   const { api } = useContext(ApiContext);
   const navigate = useNavigate();
 
@@ -25,60 +26,59 @@ const Watchlist = () => {
     });
   };
 
-  useEffect(() => {
-    !user && navigate("/login");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
-
   if (user) {
     return (
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Publishing Year</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {watchlist.map((game) => {
-              return (
-                <tr key={game._id}>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img src={game.image} alt={game.title} />
+      <>
+        <Loading />
+        <div className="overflow-x-auto">
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>Game</th>
+                <th>Description</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {watchlist.map((game) => {
+                return (
+                  <tr key={game._id}>
+                    <td>
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img src={game.image} alt={game.title} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{game.title}</div>
+                          <div className="text-sm opacity-50">{game.genre}</div>
+                          <div className="text-sm opacity-50">
+                            Published in: {game.publishing_year}
+                          </div>
                         </div>
                       </div>
-                      <div>
-                        <div className="font-bold">{game.title}</div>
-                        <div className="text-sm opacity-50">{game.genre}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    {game.description}
-                    <br />
-                  </td>
-                  <td>{game.publishing_year}</td>
-                  <th>
-                    <button
-                      className="btn btn-ghost"
-                      onClick={() => removeFromWatchlist(game._id)}
-                    >
-                      Remove
-                    </button>
-                  </th>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+                    </td>
+                    <td>
+                      {game.description}
+                      <br />
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-ghost"
+                        onClick={() => removeFromWatchlist(game._id)}
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </>
     );
   }
 };

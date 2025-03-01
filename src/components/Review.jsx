@@ -8,10 +8,11 @@ import { toast } from "react-toastify";
 
 const Review = () => {
   const { api } = useContext(ApiContext);
-  const { setLoading, fetchWatchlist  } = useContext(LoadingContext);
+  const { setLoading, watchlist, fetchWatchlist  } = useContext(LoadingContext);
   const { user } = useContext(AuthContext);
   const [review, setReview] = useState({});
   const id = useParams().id;
+  const added = watchlist.some(game => game._id === review?.game?._id);
 
   useEffect(() => {
     setLoading(true);
@@ -85,10 +86,10 @@ const Review = () => {
             <div className="card-actions justify-end">
               {user && (
                 <button
-                  className="btn btn-primary"
+                  className={`btn btn-primary ${added && "btn-disabled"}`}
                   onClick={() => addToWatchlist(review.game._id)}
                 >
-                  Add To Watchlist
+                  {added ? "Already Added" : "Add To Watchlist"}
                 </button>
               )}
             </div>

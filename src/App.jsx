@@ -80,11 +80,6 @@ function App() {
         <main className="w-[1440px] max-w-full min-h-screen bg-base-200">
           <Outlet />
           <ToastContainer />
-          {loading && (
-            <div className="absolute z-10 w-full h-full flex flex-col items-center">
-              <span className="loading loading-ring loading-xl mt-40"></span>
-            </div>
-          )}
         </main>
         <button
           className="rotate-180 rounded-full border-1 border-neutral w-8 h-8 fixed bottom-8 right-8 bg-transparent cursor-pointer opacity-20 hover:opacity-100"
