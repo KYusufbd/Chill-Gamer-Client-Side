@@ -121,8 +121,8 @@ const AddReview = () => {
                 placeholder="Publishting Year"
               />
               <label className="fieldset-label">Genre</label>
-              <select className="input w-full" required>
-                <option value="" selected disabled>
+              <select className="input w-full" defaultValue="" required>
+                <option value="" disabled>
                   Select One
                 </option>
                 {allGenres.map((genre) => (
