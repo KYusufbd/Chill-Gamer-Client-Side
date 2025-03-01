@@ -68,6 +68,7 @@ const AddReview = () => {
         return res.json();
       })
       .then((data) => {
+        e.target.reset();
         console.log(data);
       })
       .catch((error) => console.log(error));
