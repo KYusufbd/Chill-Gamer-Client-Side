@@ -3,6 +3,7 @@ import StarRatings from "react-star-ratings";
 import AuthContext from "../contexts/AuthContext";
 import ApiContext from "../contexts/ApiContext";
 import LoadingContext from "../contexts/LoadingContext";
+import { toast } from "react-toastify";
 
 const AddReview = () => {
   const { user } = useContext(AuthContext);
@@ -35,11 +36,12 @@ const AddReview = () => {
 
   const addReview = (e) => {
     e.preventDefault();
-    const image = e.target[0].value;
     const title = e.target[1].value;
+    const image = e.target[0].value;
     const description = e.target[2].value;
     const publishing_year = e.target[3].value;
     const genre = e.target[4].value;
+    const review_description = e.target[5].value;
 
     const game = {
       title,
@@ -51,8 +53,10 @@ const AddReview = () => {
 
     const review = {
       rating,
-      description,
+      review_description,
     };
+
+    console.log(game, review);
 
     user
       .getIdToken()
@@ -70,6 +74,7 @@ const AddReview = () => {
         return res.json();
       })
       .then((data) => {
+        toast("Review added successfully!");
         e.target.reset();
         console.log(data);
         fetchWatchlist();
@@ -99,24 +104,12 @@ const AddReview = () => {
                 className="input w-full"
                 placeholder="Game Title"
               />
-              <label className="fieldset-label">Review Description</label>
+              <label className="fieldset-label">Description</label>
               <textarea
                 required
                 className="h-24 textarea textarea-bordered w-full"
-                placeholder="Write your review here!"
+                placeholder="Game Description"
               ></textarea>
-              <label className="fieldset-label">Rating</label>
-              <StarRatings
-                rating={rating}
-                starRatedColor="var(--color-primary)"
-                changeRating={(rating) => {
-                  setRating(rating);
-                }}
-                numberOfStars={5}
-                name="rating"
-                starDimension="20px"
-                starSpacing="2px"
-              />
               <label className="fieldset-label">Publishing Year</label>
               <input
                 required
@@ -135,6 +128,24 @@ const AddReview = () => {
                   </option>
                 ))}
               </select>
+              <label className="fieldset-label">Rating</label>
+              <StarRatings
+                rating={rating}
+                starRatedColor="var(--color-primary)"
+                changeRating={(rating) => {
+                  setRating(rating);
+                }}
+                numberOfStars={5}
+                name="rating"
+                starDimension="20px"
+                starSpacing="2px"
+              />
+              <label className="fieldset-label">Review</label>
+              <textarea
+                required
+                className="h-24 textarea textarea-bordered w-full"
+                placeholder="Write your review here!"
+              ></textarea>
               <label className="fieldset-label">User Email</label>
               <input
                 type="email"
