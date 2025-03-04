@@ -4,13 +4,14 @@ const Footer = () => {
   return (
     <footer className="bg-neutral text-neutral-content w-full">
       <div className="flex flex-row flex-wrap w-[1440px] max-w-full px-10 pt-10">
-        <aside className="mx-auto text-center flex flex-col gap-2">
-          <img src="logo-filled.png" alt="chill-gamer-logo" className="w-15 mx-auto" />
-          <h5 className="text-xl opacity-60">Chill-Gamer</h5>
-          <p className="text-neutral-content opacity-60">
-            Your Ultimate Hub for Honest Game Reviews!
-          </p>
-        </aside>
+          <div className="flex flex-row flex-wrap gap-6 justify-center items-center mx-auto">
+            <img
+              src="logo-filled.png"
+              alt="chill-gamer-logo"
+              className="w-10 mx-auto"
+            />
+              <h5 className="text-2xl opacity-60 font-bold">CHILL-GAMER</h5>
+          </div>
         <div className="flex flex-row flex-wrap gap-10 justify-between w-full py-10">
           <nav className="flex flex-col gap-4">
             <h6 className="text-xl opacity-60">Stay Connected</h6>
@@ -52,7 +53,7 @@ const Footer = () => {
           </nav>
           <nav className="flex flex-col gap-3">
             <h6 className="text-xl opacity-60">Explore & Share</h6>
-            <div className="flex flex-col gap-4 opacity-60">
+            <div className="flex flex-col gap-1 opacity-60">
               <Link>Discover new games</Link>
               <Link>Read & write reviews</Link>
             </div>
