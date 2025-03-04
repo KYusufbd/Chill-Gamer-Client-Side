@@ -319,39 +319,3 @@ const MyReviews = () => {
 };
 
 export default MyReviews;
-
-console.log("Remove these lines after the code is completed");
-/* 
-[
-    {
-        "id": "67c30f336899a00609e2b398",
-        "review": "Hollow Knight is a beautifully crafted 2D metroidvania game set in the mysterious, ruined kingdom of Hallownest, featuring challenging combat and deep exploration.",
-        "rating": 4,
-        "game": {
-            "title": "Hollow Knight",
-            "image": "https://m.media-amazon.com/images/M/MV5BOTFkMjBkZmMtMzZkOC00NWVmLWIzMmYtOTkyYmViMTVjNWNmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-            "genre": "Adventure",
-            "description": "Hollow Knight is a beautifully crafted 2D metroidvania game set in the mysterious, ruined kingdom of Hallownest, featuring challenging combat and deep exploration.",
-            "publishing_year": "2015"
-        },
-        "user": {
-            "name": "Kazi Yusuf (Abu Khubaib)"
-        }
-    },
-    {
-        "id": "67c419970d71152d2bc96b5f",
-        "review": "Rainbow Six Siege is a tactical FPS where players engage in strategic team-based combat, utilizing unique operators and destructible environments.",
-        "rating": 4,
-        "game": {
-            "title": "Rainbow Six Siege",
-            "image": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/359550/capsule_616x353.jpg?t=1738608668",
-            "genre": "Shooter",
-            "description": "Rainbow Six Siege is a tactical FPS where players engage in strategic team-based combat, utilizing unique operators and destructible environments.",
-            "publishing_year": "2015"
-        },
-        "user": {
-            "name": "Kazi Yusuf (Abu Khubaib)"
-        }
-    }
-]
-*/
