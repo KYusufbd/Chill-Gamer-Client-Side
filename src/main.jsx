@@ -13,6 +13,7 @@ import Register from "./components/Register.jsx";
 import AuthProvider from "./firebase/AuthProvider.jsx";
 import MyReviews from "./components/MyReviews.jsx";
 import Review from "./components/Review.jsx";
+import NotFound from "./components/NotFound.jsx";
 
 const api = "http://localhost:3000";
 
@@ -31,6 +32,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="/watchlist" element={<Watchlist />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
         </BrowserRouter>
