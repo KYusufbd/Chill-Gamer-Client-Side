@@ -1,13 +1,70 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../contexts/AuthContext";
 import ApiContext from "../contexts/ApiContext";
 import LoadingContext from "../contexts/LoadingContext";
 import Loading from "./Loading";
+import StarRatings from "react-star-ratings";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
   const { api } = useContext(ApiContext);
   const { myReviews, setMyReviews, setLoading } = useContext(LoadingContext);
+  const [modalData, setModalData] = useState({});
+  const [rating, setRating] = useState(1);
+  const [update, setUpdate] = useState(false);
+
+  const openUpdateModal = (data) => {
+    setRating(data.rating);
+    setModalData(data);
+    document.getElementById("my_modal_3").showModal();
+  };
+
+  const updateReview = (e) => {
+    e.preventDefault();
+    const title = e.target[1].value;
+    const image = e.target[0].value;
+    const description = e.target[2].value;
+    const publishing_year = e.target[3].value;
+    const genre = e.target[4].value;
+    const review = e.target[5].value;
+    const review_id = modalData.id;
+
+    const gameObj = {
+      title,
+      image,
+      genre,
+      description,
+      publishing_year,
+    };
+
+    const reviewObj = {
+      rating,
+      review,
+    };
+
+    user &&
+      user
+        .getIdToken()
+        .then((token) => {
+          fetch(`${api}/review/${review_id}`, {
+            method: "PUT",
+            headers: {
+              authorization: token,
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({ game: gameObj, review: reviewObj }),
+          });
+          setModalData({});
+          setUpdate(!update);
+        })
+        .then((res) => {
+          return res;
+        })
+        .then((data) => {
+          console.log(data);
+          document.getElementById("my_modal_3").close();
+        });
+  };
 
   useEffect(() => {
     user &&
@@ -29,7 +86,31 @@ const MyReviews = () => {
           });
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, update]);
+
+  const allGenres = [
+    "Action",
+    "Adventure",
+    "RPG",
+    "Shooter",
+    "Open World",
+    "Battle Royale",
+    "Strategy",
+    "MOBA",
+    "Survival",
+    "Horror",
+    "Sandbox",
+    "Puzzle",
+    "Fighting",
+    "Simulation",
+    "Racing",
+    "Sports",
+    "MMORPG",
+    "Card Game",
+    "Platformer",
+    "Stealth",
+    "Other",
+  ];
 
   if (user) {
     return (
@@ -51,7 +132,7 @@ const MyReviews = () => {
                 return (
                   <tr key={review.id}>
                     <td>
-                      <div className="flex items-center gap-3">
+                      <div className="flex flex-wrap sm:flex-nowrap items-center gap-3">
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
                             <img
@@ -72,7 +153,14 @@ const MyReviews = () => {
                     <td>{review.review}</td>
                     <th>
                       <div className="flex flex-col">
-                        <button className="btn btn-ghost">Update</button>
+                        <button
+                          className="btn btn-ghost"
+                          onClick={() => {
+                            openUpdateModal(review);
+                          }}
+                        >
+                          Update
+                        </button>
                         <button className="btn btn-ghost">Delete</button>
                       </div>
                     </th>
@@ -82,6 +170,99 @@ const MyReviews = () => {
             </tbody>
           </table>
         </div>
+        {/* You can open the modal using document.getElementById('ID').showModal() method */}
+        <dialog id="my_modal_3" className="modal">
+          <div className="modal-box">
+            <form className="fieldset" onSubmit={updateReview}>
+              <label className="fieldset-label">Game Image</label>
+              <input
+                required
+                type="url"
+                className="input w-full"
+                placeholder="Image URL"
+                defaultValue={modalData.game?.image}
+              />
+              <label className="fieldset-label">Game Title</label>
+              <input
+                required
+                type="text"
+                className="input w-full"
+                placeholder="Game Title"
+                defaultValue={modalData.game?.title}
+              />
+              <label className="fieldset-label">Description</label>
+              <textarea
+                required
+                className="h-24 textarea textarea-bordered w-full"
+                placeholder="Game Description"
+                defaultValue={modalData.game?.description}
+              ></textarea>
+              <label className="fieldset-label">Publishing Year</label>
+              <input
+                required
+                type="year"
+                className="input w-full"
+                placeholder="Publishting Year"
+                defaultValue={modalData.game?.publishing_year}
+              />
+              <label className="fieldset-label">Genre</label>
+              <select
+                className="input w-full"
+                defaultValue={modalData?.game?.genre}
+                required
+              >
+                <option value="" disabled>
+                  Select One
+                </option>
+                {allGenres.map((genre) => (
+                  <option key={genre} value={genre}>
+                    {genre}
+                  </option>
+                ))}
+              </select>
+              <label className="fieldset-label">Rating</label>
+              <StarRatings
+                rating={modalData.rating}
+                starRatedColor="var(--color-primary)"
+                changeRating={(rating) => {
+                  setRating(rating);
+                }}
+                numberOfStars={5}
+                name="rating"
+                starDimension="20px"
+                starSpacing="2px"
+              />
+              <label className="fieldset-label">Review</label>
+              <textarea
+                required
+                className="h-24 textarea textarea-bordered w-full"
+                placeholder="Write your review here!"
+                defaultValue={modalData.review}
+              ></textarea>
+              <label className="fieldset-label">User Email</label>
+              <input
+                type="email"
+                className="input w-full"
+                value={user?.email}
+                disabled
+              />
+              <label className="fieldset-label">User Name</label>
+              <input
+                type="text"
+                className="input w-full"
+                value={user?.displayName}
+                disabled
+              />
+              <button className="btn btn-neutral mt-4">Update Review</button>
+            </form>
+            <form method="dialog">
+              {/* Close button */}
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+          </div>
+        </dialog>
       </>
     );
   }
