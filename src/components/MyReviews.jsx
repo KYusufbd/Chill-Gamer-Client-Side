@@ -4,6 +4,7 @@ import ApiContext from "../contexts/ApiContext";
 import LoadingContext from "../contexts/LoadingContext";
 import Loading from "./Loading";
 import StarRatings from "react-star-ratings";
+import swal from "sweetalert";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
@@ -11,7 +12,6 @@ const MyReviews = () => {
   const { myReviews, setMyReviews, setLoading } = useContext(LoadingContext);
   const [modalData, setModalData] = useState({});
   const [rating, setRating] = useState(1);
-  const [update, setUpdate] = useState(false);
 
   const openUpdateModal = (data) => {
     setRating(data.rating);
@@ -19,6 +19,7 @@ const MyReviews = () => {
     document.getElementById("my_modal_3").showModal();
   };
 
+  // Update a review
   const updateReview = (e) => {
     e.preventDefault();
     const title = e.target[1].value;
@@ -43,50 +44,92 @@ const MyReviews = () => {
     };
 
     user &&
-      user
-        .getIdToken()
-        .then((token) => {
-          fetch(`${api}/review/${review_id}`, {
-            method: "PUT",
-            headers: {
-              authorization: token,
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({ game: gameObj, review: reviewObj }),
+      user.getIdToken().then((token) => {
+        fetch(`${api}/review/${review_id}`, {
+          method: "PUT",
+          headers: {
+            authorization: token,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({ game: gameObj, review: reviewObj }),
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            fetchMyReviews();
           });
-          setModalData({});
-          setUpdate(!update);
-        })
-        .then((res) => {
-          return res;
-        })
-        .then((data) => {
-          console.log(data);
-          document.getElementById("my_modal_3").close();
-        });
+        setModalData({});
+        document.getElementById("my_modal_3").close();
+      });
   };
 
-  useEffect(() => {
+  // Delete a review
+  const deleteReview = (id) => {
     user &&
       user.getIdToken().then((token) => {
-        setLoading(true);
-        fetch(`${api}/my-reviews`, {
-          method: "GET",
+        fetch(`${api}/review/${id}`, {
+          method: "DELETE",
           headers: {
             authorization: token,
             "content-type": "application/json",
           },
         })
           .then((res) => {
+            fetchMyReviews();
             return res.json();
           })
           .then((data) => {
-            setMyReviews(data);
-            setLoading(false);
+            console.log(data);
           });
       });
+  };
+
+  // Warn before deleting a review
+  const confirmDelete = (id) => {
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this review!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        deleteReview(id);
+        swal("Your review has been deleted successfully!", {
+          icon: "success",
+        });
+      } else {
+        swal("Your review is not deleted!");
+      }
+    });
+  };
+
+  const fetchMyReviews = () => {
+    user.getIdToken().then((token) => {
+      setLoading(true);
+      fetch(`${api}/my-reviews`, {
+        method: "GET",
+        headers: {
+          authorization: token,
+          "content-type": "application/json",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setMyReviews(data);
+          setLoading(false);
+        });
+    });
+  };
+
+  useEffect(() => {
+    user && fetchMyReviews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, update]);
+  }, [user]);
 
   const allGenres = [
     "Action",
@@ -136,20 +179,20 @@ const MyReviews = () => {
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
                             <img
-                              src={review.game.image}
-                              alt={review.game.title}
+                              src={review.game?.image}
+                              alt={review.game?.title}
                             />
                           </div>
                         </div>
                         <div>
-                          <div className="font-bold">{review.game.title}</div>
+                          <div className="font-bold">{review.game?.title}</div>
                           <div className="text-sm opacity-50">
-                            {review.game.genre}
+                            {review.game?.genre}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td>{review.game.description}</td>
+                    <td>{review.game?.description}</td>
                     <td>{review.review}</td>
                     <th>
                       <div className="flex flex-col">
@@ -161,7 +204,14 @@ const MyReviews = () => {
                         >
                           Update
                         </button>
-                        <button className="btn btn-ghost">Delete</button>
+                        <button
+                          className="btn btn-ghost"
+                          onClick={() => {
+                            confirmDelete(review.id);
+                          }}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </th>
                   </tr>
