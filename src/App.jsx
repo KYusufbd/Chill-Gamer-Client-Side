@@ -80,7 +80,7 @@ function App() {
         className="card bg-base-200 w-full shrink-0 shadow-2xl flex flex-col justify-center items-center"
       >
         <Navbar themeToggle={themeToggle} theme={theme} />
-        <main className="w-[1440px] max-w-full min-h-screen bg-base-200">
+        <main className="w-[1440px] max-w-full bg-base-200">
           <Outlet />
           <ToastContainer />
         </main>

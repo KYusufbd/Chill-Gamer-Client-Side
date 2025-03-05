@@ -28,7 +28,7 @@ const Watchlist = () => {
     return (
       <>
         <Loading />
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto min-h-screen">
           <table className="table">
             {/* head */}
             <thead>
