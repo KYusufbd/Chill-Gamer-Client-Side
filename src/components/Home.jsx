@@ -1,4 +1,5 @@
 import Banner from "./Banner";
+import ShareYourOpinion from "./ShareYourOpinion";
 import TopRated from "./TopRated";
 import WhatGamersSay from "./WhatGamersSay";
 
@@ -8,6 +9,7 @@ const Home = () => {
       <Banner />
       <TopRated />
       <WhatGamersSay />
+      <ShareYourOpinion />
     </div>
   );
 };
