@@ -15,8 +15,8 @@ import MyReviews from "./components/MyReviews.jsx";
 import Review from "./components/Review.jsx";
 import NotFound from "./components/NotFound.jsx";
 
-// const api = "http://localhost:3000";
-const api = "http://chill-gamer-server-side-pi.vercel.app";
+const api = "http://localhost:3000";
+// const api = "http://chill-gamer-server-side-pi.vercel.app";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

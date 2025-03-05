@@ -3,7 +3,6 @@ import { Typewriter } from "react-simple-typewriter";
 import { Link } from "react-router";
 
 import "swiper/css";
-// import "swiper/css/autoplay";
 import "swiper/bundle";
 import { Autoplay, Zoom } from "swiper/modules";
 
