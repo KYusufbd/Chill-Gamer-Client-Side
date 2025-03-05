@@ -4,6 +4,8 @@ import AuthContext from "../contexts/AuthContext";
 import ApiContext from "../contexts/ApiContext";
 import LoadingContext from "../contexts/LoadingContext";
 import { toast } from "react-toastify";
+import swal from "sweetalert";
+import { useNavigate } from "react-router";
 
 const AddReview = () => {
   const { user } = useContext(AuthContext);
@@ -83,6 +85,24 @@ const AddReview = () => {
   };
 
   const [rating, setRating] = useState(1);
+
+  const navigate = useNavigate();
+
+  !user &&
+    swal({
+      title: "You have to log in or register first",
+      text: "You can not add a review when you are not a logged in user!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((login) => {
+      if (login) {
+        navigate("/login");
+      } else {
+        navigate("/");
+      }
+    });
+
   if (user) {
     return (
       <div className="flex flex-col items-center min-h-screen gap-4 py-4 font-bold">
@@ -113,7 +133,7 @@ const AddReview = () => {
               <label className="fieldset-label">Publishing Year</label>
               <input
                 required
-                type="year"
+                type="number"
                 className="input w-full"
                 placeholder="Publishting Year"
               />

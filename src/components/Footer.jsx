@@ -54,14 +54,14 @@ const Footer = () => {
           <nav className="flex flex-col gap-3">
             <h6 className="text-xl opacity-60">Explore & Share</h6>
             <div className="flex flex-col gap-1 opacity-60">
-              <Link>Discover new games</Link>
-              <Link>Read & write reviews</Link>
+              <Link to="/reviews">Discover new games</Link>
+              <Link to="/reviews">Read & write reviews</Link>
             </div>
           </nav>
           <nav className="flex flex-col gap-3">
             <h6 className="text-xl opacity-60">Contact Us</h6>
             <div className="flex flex-col gap-4 opacity-60">
-              <Link>support@chill-gamer.com</Link>
+              <a>support@chill-gamer.com</a>
             </div>
           </nav>
         </div>

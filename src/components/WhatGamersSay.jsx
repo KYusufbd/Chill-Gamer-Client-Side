@@ -30,7 +30,7 @@ const WhatGamersSay = () => {
             1024: { slidesPerView: 3, spaceBetween: 30 },
           }}
           autoplay={{
-            delay: 4000
+            delay: 4000,
           }}
           navigation={true}
           speed={800}
