@@ -61,6 +61,31 @@ function App() {
     scrollTo(0, 0);
   }, [location]);
 
+  const genres = [
+    "Action",
+    "Adventure",
+    "Battle Royale",
+    "Card Game",
+    "Fighting",
+    "Horror",
+    "MMORPG",
+    "MOBA",
+    "Open World",
+    "Party",
+    "Platformer",
+    "Puzzle",
+    "Racing",
+    "RPG",
+    "Sandbox",
+    "Shooter",
+    "Simulation",
+    "Sports",
+    "Stealth",
+    "Strategy",
+    "Survival",
+    "Other",
+  ];
+
   return (
     <LoadingContext.Provider
       value={{
@@ -73,6 +98,7 @@ function App() {
         fetchWatchlist,
         myReviews,
         setMyReviews,
+        genres,
       }}
     >
       <div

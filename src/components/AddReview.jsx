@@ -10,31 +10,8 @@ import { useNavigate } from "react-router";
 const AddReview = () => {
   const { user } = useContext(AuthContext);
   const { api } = useContext(ApiContext);
-  const { fetchWatchlist } = useContext(LoadingContext);
+  const { fetchWatchlist, genres } = useContext(LoadingContext);
 
-  const allGenres = [
-    "Action",
-    "Adventure",
-    "RPG",
-    "Shooter",
-    "Open World",
-    "Battle Royale",
-    "Strategy",
-    "MOBA",
-    "Survival",
-    "Horror",
-    "Sandbox",
-    "Puzzle",
-    "Fighting",
-    "Simulation",
-    "Racing",
-    "Sports",
-    "MMORPG",
-    "Card Game",
-    "Platformer",
-    "Stealth",
-    "Other",
-  ];
 
   const addReview = (e) => {
     e.preventDefault();
@@ -91,7 +68,7 @@ const AddReview = () => {
   !user &&
     swal({
       title: "You have to log in or register first",
-      text: "You can not add a review when you are not a logged in user!",
+      text: "You can not add a review when you are not a logged in user! Want to log in now?",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -142,7 +119,7 @@ const AddReview = () => {
                 <option value="" disabled>
                   Select One
                 </option>
-                {allGenres.map((genre) => (
+                {genres.map((genre) => (
                   <option key={genre} value={genre}>
                     {genre}
                   </option>

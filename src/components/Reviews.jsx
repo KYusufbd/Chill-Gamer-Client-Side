@@ -6,17 +6,19 @@ import Loading from "./Loading";
 import { Fade } from "react-awesome-reveal";
 
 const Reviews = () => {
-  const { setLoading, allReviews, setAllReviews } = useContext(LoadingContext);
+  const { setLoading, allReviews, setAllReviews, genres } =
+    useContext(LoadingContext);
   const { api } = useContext(ApiContext);
   const [sort, setSort] = useState(null);
   const [order, setOrder] = useState("acc");
-
-  console.log(sort, order); // Testing purpose
+  const [genre, setGenre] = useState(null);
 
   // Fetch all review:
   useEffect(() => {
     setLoading(true);
-    fetch(`${api}/reviews?${sort && "sort=" + sort + "&order=" + order}`)
+    fetch(
+      `${api}/reviews?${sort ? `sort=${sort}&order=${order}` : ""}${genre && sort ? "&" : ''}${genre ? "genre=" + genre : ''}`,
+    )
       .then((res) => {
         return res.json();
       })
@@ -25,7 +27,7 @@ const Reviews = () => {
         setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sort, order]);
+  }, [sort, order, genre]);
 
   return (
     <div className="min-h-screen">
@@ -34,10 +36,19 @@ const Reviews = () => {
         <div className="flex flex-row gap-5 flex-wrap">
           <div className="flex flex-row items-center gap-2">
             <p>Filter by genre:</p>
-            <select name="sort" defaultValue="">
+            <select
+              name="sort"
+              defaultValue=""
+              onChange={(e) => setGenre(e.target.value)}
+            >
               <option value="">None</option>
-              <option value="rating">Rating</option>
-              <option value="year">Year</option>
+              {genres.map((g) => {
+                return (
+                  <option key={genres.indexOf(g)} value={g}>
+                    {g}
+                  </option>
+                );
+              })}
             </select>
           </div>
           <div className="flex flex-row items-center gap-2">
