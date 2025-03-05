@@ -68,6 +68,10 @@ npm run preview
 
 ---
 
+## Server Side Code Repository: 
+- https://github.com/KYusufbd/Chill-Gamer-Server-Side
+
+
 ## 🔥 API Endpoints
 
 ### **Reviews API**
