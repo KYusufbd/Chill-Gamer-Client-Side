@@ -3,7 +3,7 @@
 **Chill-Gamer** is a dynamic and interactive gaming review platform where users can explore game reviews, share their opinions, and engage with a community of gamers. The platform allows users to rate games, write reviews, and discover new titles through curated sections like top-rated games, user recommendations, and more.
 
 ## 🚀 Live Demo
-🔗 [Visit Chill-Gamer](https://chill-gamer-yk.netlify.app/)
+🔗 [Visit Chill-Gamer](https://chill-gamer-6e64e.web.app/)
 
 ---
 
