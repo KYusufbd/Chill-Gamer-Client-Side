@@ -5,7 +5,7 @@ const Loading = () => {
   const { loading } = useContext(LoadingContext);
   if (loading) {
     return (
-      <div className="absolute z-10 w-full h-full flex flex-col items-center">
+      <div className="absolute z-10 w-full h-full flex flex-col items-center min-h-screen">
         <span className="loading loading-ring loading-xl mt-40"></span>
       </div>
     );

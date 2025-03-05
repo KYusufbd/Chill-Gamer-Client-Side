@@ -1,35 +1,31 @@
-import { useContext, useEffect } from "react";
-import LoadingContext from "../contexts/LoadingContext";
-import { Link } from "react-router";
+import { useContext, useEffect, useState } from "react";
 import ApiContext from "../contexts/ApiContext";
-import Loading from "./Loading";
+import { Link } from "react-router";
 import { Fade } from "react-awesome-reveal";
 
-const Reviews = () => {
-  const { setLoading, allReviews, setAllReviews } = useContext(LoadingContext);
+const TopRated = () => {
+  const [topRated, setTopRated] = useState([]);
   const { api } = useContext(ApiContext);
 
   useEffect(() => {
-    if (!allReviews.length) {
-      setLoading(true);
-      fetch(`${api}/reviews`)
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          setAllReviews(data);
-          setLoading(false);
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allReviews]);
+    fetch(`${api}/top-rated`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setTopRated(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [api]);
 
   return (
-    <div className="min-h-screen">
-      <Loading />
+    <div className="flex flex-col gap-4 py-10">
+      <h2 className="text-3xl text-center font-bold">Top Rated Games</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 p-3">
-        <Fade>
-          {allReviews.map((review) => {
+        <Fade cascade>
+          {topRated.map((review) => {
             return (
               <div
                 key={review.id}
@@ -64,4 +60,4 @@ const Reviews = () => {
   );
 };
 
-export default Reviews;
+export default TopRated;

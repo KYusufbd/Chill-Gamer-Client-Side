@@ -4,14 +4,14 @@ const Footer = () => {
   return (
     <footer className="bg-neutral text-neutral-content w-full">
       <div className="flex flex-row flex-wrap w-[1440px] max-w-full px-10 pt-10">
-          <div className="flex flex-row flex-wrap gap-6 justify-center items-center mx-auto">
-            <img
-              src="logo-filled.png"
-              alt="chill-gamer-logo"
-              className="w-10 mx-auto"
-            />
-              <h5 className="text-2xl opacity-60 font-bold">CHILL-GAMER</h5>
-          </div>
+        <div className="flex flex-row flex-wrap gap-6 justify-center items-center mx-auto">
+          <img
+            src="/logo-filled.png"
+            alt="chill-gamer-logo"
+            className="w-10 mx-auto"
+          />
+          <h5 className="text-2xl opacity-60 font-bold">CHILL-GAMER</h5>
+        </div>
         <div className="flex flex-row flex-wrap gap-10 justify-between w-full py-10">
           <nav className="flex flex-col gap-4">
             <h6 className="text-xl opacity-60">Stay Connected</h6>
